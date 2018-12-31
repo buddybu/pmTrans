@@ -16,6 +16,7 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 import util.CacheList;
 
@@ -306,7 +307,7 @@ public class MenuManager {
 					}
 				});
 
-		// Short rewind
+		// Long rewind
 		addConfigurableMenuItem(playbackM, "Rewind "
 				+ Config.getInstance().getInt(Config.LONG_REWIND) + "seg",
 				Config.LONG_REWIND_KEY, new SelectionAdapter() {
@@ -396,21 +397,74 @@ public class MenuManager {
 
 	private MenuItem addConfigurableMenuItem(Menu menu, final String orgText,
 			final String acceleratorKey, SelectionListener listener) {
-		char accelerator = Config.getInstance().getString(acceleratorKey)
-				.toUpperCase().charAt(0);
-		int acc = SWT.MOD1 + (accelerator == ' ' ? SWT.SPACE : accelerator);
-		String text = orgText + " \t Ctrl+"
-				+ (accelerator == ' ' ? "[space]" : accelerator);
+		
+		String accelerator;
+		String acceleratorString = Config.getInstance().getString(acceleratorKey);
+		String[] accelStrArr = acceleratorString.split(",");
+
+		int accelMask = 0;
+		String accelMaskStr = "";
+
+		if (accelStrArr.length > 1) {
+			accelerator = accelStrArr[1];
+			for (int i=0;i < accelStrArr[0].length();i++) {
+				switch (accelStrArr[0].charAt(i)) {
+				case 'c':
+					if (accelMaskStr.length() > 0) 
+						accelMaskStr += "+";
+					accelMaskStr += "ctrl";
+					accelMask |= SWT.MOD1;
+					break;
+				case 'a':
+					if (accelMaskStr.length() > 0) 
+						accelMaskStr += "+";
+					accelMaskStr += "alt";
+					accelMask |= SWT.MOD3;
+					break;
+				case 's':
+					if (accelMaskStr.length() > 0) 
+						accelMaskStr += "+";
+					accelMaskStr += "shift";
+					accelMask |= SWT.MOD2;
+					break;
+				}
+			}
+
+		} else {
+			accelerator = accelStrArr[0];
+			accelMask = 0;
+			accelMaskStr = "";
+		}
+		
+		// MOD1 -> CTRL
+		// MOD2 -> SHIFT
+		// MOD3 -> ALT
+		
+		int acc = accelMask;
+		String text = orgText + " \t " + accelMaskStr + " ";
+		switch (accelerator.charAt(0)) {
+		case ' ':
+			acc += SWT.SPACE;
+			text += "[space]";
+			break;
+		case '\t':
+			acc += SWT.TAB;
+			text += "[tab]";
+			break;
+		default:
+			acc += accelerator.charAt(0);
+			text += accelerator;
+			break;
+		}
 
 		final MenuItem item = addMenuItem(menu, text, acc, listener);
 
 		Config.getInstance().addPropertyChangeListener(
 				new IPropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent arg0) {
-						if (arg0.getProperty().equals(acceleratorKey))
+						if (arg0.getProperty().equals(accelerator))
 							updateAccelerator(item, orgText, Config
-									.getInstance().getString(acceleratorKey)
-									.toUpperCase().charAt(0));
+									.getInstance().getString(acceleratorKey));
 					}
 				});
 
@@ -459,11 +513,61 @@ public class MenuManager {
 	}
 
 	private void updateAccelerator(MenuItem item, String itemText,
-			char newAccelerator) {
-		itemText += " \t Ctrl+"
-				+ (newAccelerator == ' ' ? "[space]" : newAccelerator);
-		int acc = SWT.MOD1
-				+ (newAccelerator == ' ' ? SWT.SPACE : newAccelerator);
+			String newAcceleratorStr) {
+
+		String[] accelStrArr = newAcceleratorStr.split(",");
+		
+		int accelMask = 0;
+		String accelMaskStr = "";
+
+		String newAccelerator;
+		if (accelStrArr.length > 1) {
+			newAccelerator = accelStrArr[1];
+			for (int i=0;i < accelStrArr[0].length();i++) {
+				switch (accelStrArr[0].charAt(i)) {
+				case 'c':
+					if (accelMaskStr.length() > 0) 
+						accelMaskStr += "+";
+					accelMaskStr += "ctrl";
+					accelMask |= SWT.MOD1;
+					break;
+				case 'a':
+					if (accelMaskStr.length() > 0) 
+						accelMaskStr += "+";
+					accelMaskStr += "alt";
+					accelMask |= SWT.MOD3;
+					break;
+				case 's':
+					if (accelMaskStr.length() > 0) 
+						accelMaskStr += "+";
+					accelMaskStr += "shift";
+					accelMask |= SWT.MOD2;
+					break;
+				}
+			}
+
+		} else {
+			newAccelerator = accelStrArr[0];
+			accelMask = 0;
+			accelMaskStr = "";
+		}
+		
+		itemText += " \t " + accelMaskStr + " ";
+		int acc = accelMask;
+		switch (newAccelerator.charAt(0)) {
+		case ' ':
+			itemText += "[space]";
+			acc += SWT.SPACE;
+			break;
+		case '\t':
+			itemText += "[tab]";
+			acc += SWT.TAB;
+			break;
+		default :
+			itemText += newAccelerator.charAt(0);
+			acc += newAccelerator.charAt(0);
+			break;
+		}
 		item.setText(itemText);
 		item.setAccelerator(acc);
 	}
