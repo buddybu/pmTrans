@@ -138,9 +138,9 @@ public class PmTrans {
 
 	private void startAutoSave() {
 		if (Config.getInstance().getBoolean(Config.AUTO_SAVE)) {
-			final int frecuency = Config.getInstance().getInt(Config.AUTO_SAVE_TIME) * 60 * 1000;
-			if (frecuency > 0) {
-				Display.getCurrent().timerExec(frecuency, new Runnable() {
+			final int frequency = Config.getInstance().getInt(Config.AUTO_SAVE_TIME) * 60 * 1000;
+			if (frequency > 0) {
+				Display.getCurrent().timerExec(frequency, new Runnable() {
 					public void run() {
 						if (!textEditor.isDisposed() && transcriptionFile != null) {
 							try {
@@ -149,7 +149,7 @@ public class PmTrans {
 								// ignore
 							}
 						}
-						Display.getCurrent().timerExec(frecuency, this);
+						Display.getCurrent().timerExec(frequency, this);
 					}
 				});
 			}

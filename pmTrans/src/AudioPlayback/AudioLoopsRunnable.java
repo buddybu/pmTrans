@@ -17,12 +17,12 @@ public class AudioLoopsRunnable implements Runnable {
 		if (stop)
 			return;
 
-		final int frecuency = Config.getInstance()
-				.getInt(Config.LOOP_FRECUENCY) * 1000;
+		final int frequency = Config.getInstance()
+				.getInt(Config.LOOP_FREQUENCY) * 1000;
 		if (audioPlayer.isPlaying())
 			audioPlayer.rewind(Config.getInstance().getInt(Config.LOOP_LENGHT));
 
-		Display.getCurrent().timerExec(frecuency, this);
+		Display.getCurrent().timerExec(frequency, this);
 	}
 
 	public void stop() {

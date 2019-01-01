@@ -164,8 +164,8 @@ public class Config extends PreferenceStore {
 	// Audio loops
 	private static String AUDIO_LOOPS_KEY_DEFAULT = "c,9";
 	public static String AUDIO_LOOPS_KEY = "audio.loops.key";
-	public static String LOOP_FRECUENCY = "loop.frecuency";
-	private static int LOOP_FRECUENCY_DEFAULT = 5;
+	public static String LOOP_FREQUENCY = "loop.frequency";
+	private static int LOOP_FREQUENCY_DEFAULT = 5;
 	public static String LOOP_LENGHT = "loop.length";
 	private static int LOOP_LENGHT_DEFAULT = 2;
 	// Timestamps
@@ -205,7 +205,7 @@ public class Config extends PreferenceStore {
 		setDefault(SLOW_DOWN_KEY, SLOW_DOWN_KEY_DEFAULT);
 		// Audio loops
 		setDefault(AUDIO_LOOPS_KEY, AUDIO_LOOPS_KEY_DEFAULT);
-		setDefault(LOOP_FRECUENCY, LOOP_FRECUENCY_DEFAULT);
+		setDefault(LOOP_FREQUENCY, LOOP_FREQUENCY_DEFAULT);
 		setDefault(LOOP_LENGHT, LOOP_LENGHT_DEFAULT);
 		// Timestamp
 		setDefault(TIMESTAMP_KEY, TIMESTAMP_KEY_DEFAULT);
@@ -251,7 +251,7 @@ public class Config extends PreferenceStore {
 				addField(new IntegerFieldEditor(REWIND_AND_PLAY, "Rewind-and-resume duartion duration (in sec)",
 						getFieldEditorParent()));
 				addField(
-						new IntegerFieldEditor(LOOP_FRECUENCY, "Loops frecuency (in seconds)", getFieldEditorParent()));
+						new IntegerFieldEditor(LOOP_FREQUENCY, "Loops frequency (in seconds)", getFieldEditorParent()));
 				addField(
 						new IntegerFieldEditor(LOOP_LENGHT, "Loop rewind lenght (in seconds)", getFieldEditorParent()));
 			}
@@ -285,7 +285,7 @@ public class Config extends PreferenceStore {
 						getFieldEditorParent()));
 				// TODO add a separator here
 				addField(new BooleanFieldEditor(AUTO_SAVE, "Auto save", getFieldEditorParent()));
-				addField(new IntegerFieldEditor(AUTO_SAVE_TIME, "Auto save frecuency (in minutes)",
+				addField(new IntegerFieldEditor(AUTO_SAVE_TIME, "Auto save frequency (in minutes)",
 						getFieldEditorParent()));
 			}
 		};

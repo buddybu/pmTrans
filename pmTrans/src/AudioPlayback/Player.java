@@ -248,7 +248,7 @@ public abstract class Player {
 		if (loopsTask == null) {
 			loopsTask = new AudioLoopsRunnable(this);
 			Display.getCurrent().timerExec(
-					Config.getInstance().getInt(Config.LOOP_FRECUENCY) * 1000,
+					Config.getInstance().getInt(Config.LOOP_FREQUENCY) * 1000,
 					loopsTask);
 		} else {
 			loopsTask.stop();
