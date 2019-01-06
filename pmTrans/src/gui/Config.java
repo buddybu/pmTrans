@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.EventObject;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;

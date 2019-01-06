@@ -16,7 +16,6 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.jnativehook.keyboard.NativeKeyEvent;
 
 import util.CacheList;
 

@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,12 +21,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import util.CacheList;
-import util.ListChangeListener;
-import util.PmTransException;
 import AudioPlayback.AudioPlayerTarsosDSP;
 import AudioPlayback.DummyPlayer;
 import AudioPlayback.Player;
+import util.CacheList;
+import util.ListChangeListener;
+import util.PmTransException;
 
 public class PmTrans {
 

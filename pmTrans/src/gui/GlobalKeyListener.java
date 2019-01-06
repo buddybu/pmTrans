@@ -61,19 +61,6 @@ public class GlobalKeyListener implements NativeKeyListener {
 		this.evidenceBucket = evidenceBucket;
 	}
 
-	private boolean evaluateKeyEvent(NativeKeyEvent event, char key) {
-		String keyText = NativeKeyEvent.getKeyText(event.getKeyCode());
-		if (keyText.equals("Space")) {
-			keyText = " ";
-		} else if (keyText.equals("Tab")) {
-			keyText = "\t";
-		} 
-
-		Character pressed = keyText.length() == 1 ? keyText.charAt(0) : null;
-		return event.getModifiers() == NativeKeyEvent.CTRL_MASK
-				&& pressed != null && pressed == key;
-	}
-
 	private boolean evaluateKeyStringEvent(NativeKeyEvent event, String keyString) {
 		String keyText = NativeKeyEvent.getKeyText(event.getKeyCode());
 		int keyMask = event.getModifiers();
